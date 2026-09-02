@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:material="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
+    xmlns:m="clr-namespace:UraniumUI.Icons.MaterialSymbols;assembly=UraniumUI.Icons.MaterialSymbols"
+    x:Class="CabeleleiraLeila.Views.LoginPage"
+    Title="{Binding Title}"
+    Shell.BackgroundColor="{StaticResource Primary}"
+    Shell.TitleColor="{StaticResource OnPrimary}"
+    Shell.ForegroundColor="{StaticResource OnPrimary}">
+
+    <Grid>
+        
+        <Path Data="M 0,0 L 100,0 L 100,60 C 70,100 30,20 0,60 Z"
+              Fill="{StaticResource Primary}"
+              Aspect="Fill"
+              HorizontalOptions="Fill"
+              VerticalOptions="Start"
+              HeightRequest="280" />
+
+        
+        <ScrollView>
+            <VerticalStackLayout Padding="24,30,24,24" Spacing="24">
+
+                
+                <VerticalStackLayout Spacing="5" Margin="0,0,0,10">
+                    <Label Text="Bem-vindo de volta" Style="{StaticResource Headline}" TextColor="{StaticResource OnPrimary}" />
+                    <Label Text="Faça login para continuar" Style="{StaticResource SubHeadline}" FontSize="16" TextColor="{StaticResource OnPrimary}" Opacity="0.8" />
+                </VerticalStackLayout>
+
+                <Border Padding="20" 
+                        BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}" 
+                        StrokeThickness="0">
+
+                    <Border.Shadow>
+                        <Shadow Brush="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource BackgroundDark}}" 
+                                Opacity="0.15" 
+                                Radius="15" 
+                                Offset="0,5" />
+                    </Border.Shadow>
+
+                    <VerticalStackLayout Spacing="16">
+
+                        
+                        <Grid ColumnDefinitions="*, *" HeightRequest="45" Margin="0,0,0,10">
+
+                            <Border Grid.Column="0" StrokeThickness="0" BackgroundColor="Transparent" Padding="0">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SelecionarClienteCommand}" />
+                                </Border.GestureRecognizers>
+                                <VerticalStackLayout Spacing="0" VerticalOptions="End">
+                                    <!-- Gatilho de Opacidade para destacar a seleção -->
+                                    <VerticalStackLayout.Triggers>
+                                        <DataTrigger TargetType="VerticalStackLayout" Binding="{Binding IsClienteMode}" Value="True">
+                                            <Setter Property="Opacity" Value="1.0" />
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="VerticalStackLayout" Binding="{Binding IsClienteMode}" Value="False">
+                                            <Setter Property="Opacity" Value="0.4" />
+                                        </DataTrigger>
+                                    </VerticalStackLayout.Triggers>
+
+                                    <Label Text="Cliente" HorizontalOptions="Center" FontFamily="OpenSansSemibold" FontSize="16" Margin="0,0,0,8">
+                                        <Label.Triggers>
+                                            <DataTrigger TargetType="Label" Binding="{Binding IsClienteMode}" Value="True">
+                                                <Setter Property="TextColor" Value="{StaticResource Primary}" />
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Label" Binding="{Binding IsClienteMode}" Value="False">
+                                                <Setter Property="TextColor" Value="{StaticResource TextSecondaryLight}" />
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+                                    <BoxView HeightRequest="3" CornerRadius="1.5">
+                                        <BoxView.Triggers>
+                                            <DataTrigger TargetType="BoxView" Binding="{Binding IsClienteMode}" Value="True">
+                                                <Setter Property="Color" Value="{StaticResource Primary}" />
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="BoxView" Binding="{Binding IsClienteMode}" Value="False">
+                                                <Setter Property="Color" Value="Transparent" />
+                                            </DataTrigger>
+                                        </BoxView.Triggers>
+                                    </BoxView>
+                                </VerticalStackLayout>
+                            </Border>
+
+                            <!-- Aba Administrador -->
+                            <Border Grid.Column="1" StrokeThickness="0" BackgroundColor="Transparent" Padding="0">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SelecionarAdminCommand}" />
+                                </Border.GestureRecognizers>
+                                <VerticalStackLayout Spacing="0" VerticalOptions="End">
+                                    <!-- Gatilho de Opacidade para destacar a seleção -->
+                                    <VerticalStackLayout.Triggers>
+                                        <DataTrigger TargetType="VerticalStackLayout" Binding="{Binding IsAdminMode}" Value="True">
+                                            <Setter Property="Opacity" Value="1.0" />
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="VerticalStackLayout" Binding="{Binding IsAdminMode}" Value="False">
+                                            <Setter Property="Opacity" Value="0.4" />
+                                        </DataTrigger>
+                                    </VerticalStackLayout.Triggers>
+
+                                    <Label Text="Administrador" HorizontalOptions="Center" FontFamily="OpenSansSemibold" FontSize="16" Margin="0,0,0,8">
+                                        <Label.Triggers>
+                                            <DataTrigger TargetType="Label" Binding="{Binding IsAdminMode}" Value="True">
+                                                <Setter Property="TextColor" Value="{StaticResource Primary}" />
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Label" Binding="{Binding IsAdminMode}" Value="False">
+                                                <Setter Property="TextColor" Value="{StaticResource TextSecondaryLight}" />
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+                                    <BoxView HeightRequest="3" CornerRadius="1.5">
+                                        <BoxView.Triggers>
+                                            <DataTrigger TargetType="BoxView" Binding="{Binding IsAdminMode}" Value="True">
+                                                <Setter Property="Color" Value="{StaticResource Primary}" />
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="BoxView" Binding="{Binding IsAdminMode}" Value="False">
+                                                <Setter Property="Color" Value="Transparent" />
+                                            </DataTrigger>
+                                        </BoxView.Triggers>
+                                    </BoxView>
+                                </VerticalStackLayout>
+                            </Border>
+
+                            <BoxView Grid.ColumnSpan="2" HeightRequest="1" Color="{StaticResource TextSecondaryLight}" Opacity="0.2" VerticalOptions="End" />
+                        </Grid>
+
+                        <!-- FORMULÁRIO -->
+                        <material:TextField Title="E-mail" Text="{Binding Email}" Keyboard="Email">
+                            <material:TextField.Icon>
+                                <FontImageSource FontFamily="MaterialSharp" Glyph="{x:Static m:MaterialSharp.Stacked_email}" />
+                            </material:TextField.Icon>
+                        </material:TextField>
+
+                        <material:TextField Title="Senha" Text="{Binding Senha}" IsPassword="{Binding OcultarSenha}">
+
+                            <material:TextField.Icon>
+                                <FontImageSource FontFamily="MaterialSharp" Glyph="{x:Static m:MaterialSharp.Lock}" />
+                            </material:TextField.Icon>
+
+                            <!-- Olhinho da Senha (Direto no Attachments) -->
+                            <material:TextField.Attachments>
+
+                                <ImageButton Command="{Binding AlternarSenhaCommand}" BackgroundColor="Transparent" Padding="10" MaximumHeightRequest="45" MaximumWidthRequest="45">
+                                    <ImageButton.Triggers>
+
+                                        <DataTrigger TargetType="ImageButton" Binding="{Binding OcultarSenha}" Value="True">
+                                            <Setter Property="Source">
+                                                <Setter.Value>
+                                                    <FontImageSource FontFamily="MaterialSharp" Glyph="{x:Static m:MaterialSharp.Visibility}" Color="{StaticResource TextSecondaryLight}"/>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger>
+
+                                        <DataTrigger TargetType="ImageButton" Binding="{Binding OcultarSenha}" Value="False">
+                                            <Setter Property="Source">
+                                                <Setter.Value>
+                                                    <FontImageSource FontFamily="MaterialSharp" Glyph="{x:Static m:MaterialSharp.Visibility_off}" Color="{StaticResource TextSecondaryLight}"/>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger>
+
+                                    </ImageButton.Triggers>
+                                </ImageButton>
+
+                            </material:TextField.Attachments>
+
+                        </material:TextField>
+
+                        <Label Text="Esqueceu a senha?" 
+                               TextColor="{StaticResource Primary}" 
+                               FontFamily="OpenSansSemibold" 
+                               HorizontalOptions="End"
+                               Margin="0,0,0,10">
+                             <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding EsqueceuSenhaCommand}" />
+                            </Label.GestureRecognizers> 
+                        </Label>
+
+                        <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" WidthRequest="24" HeightRequest="24" HorizontalOptions="Center" />
+
+                        <Button Text="Acessar" Command="{Binding EntrarCommand}" IsEnabled="{Binding IsNotBusy}" Margin="0,10,0,0"/>
+
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- BOTÃO VOLTAR -->
+                <Button Text="Voltar ao Início" Command="{Binding VoltarCommand}" BackgroundColor="Transparent" TextColor="{StaticResource TextSecondaryLight}" />
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

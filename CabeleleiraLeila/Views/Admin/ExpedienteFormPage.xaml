@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:material="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
+             x:Class="CabeleleiraLeila.Views.Admin.ExpedienteFormPage"
+             Title="{Binding Title}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="24">
+
+            <Border Padding="20" StrokeThickness="0" BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}">
+                <VerticalStackLayout Spacing="20">
+
+                    <Grid ColumnDefinitions="*, Auto" VerticalOptions="Center">
+                        <VerticalStackLayout Grid.Column="0">
+                            <Label Text="Salão Aberto?" FontFamily="OpenSansSemibold" FontSize="16" />
+                            <Label Text="Desative para feriados ou folgas." FontSize="12" TextColor="{StaticResource TextSecondaryLight}" />
+                        </VerticalStackLayout>
+                        
+                        <Switch x:Name="SwitchAberto" Grid.Column="1" IsToggled="{Binding HorarioAtual.IsAberto}" />
+                    </Grid>
+
+                    <BoxView HeightRequest="1" Color="{StaticResource TextSecondaryLight}" Opacity="0.2" />
+
+                    
+                    <VerticalStackLayout Spacing="18" IsVisible="{Binding Source={x:Reference SwitchAberto}, Path=IsToggled}">
+
+                        <Label Text="Turno da Manhã" FontFamily="OpenSansSemibold" TextColor="{StaticResource Primary}" />
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="15">
+                            <material:TimePickerField Grid.Column="0" Title="Abertura" Time="{Binding HorarioAtual.AberturaManhaTime}" />
+                            <material:TimePickerField Grid.Column="1" Title="Fechamento" Time="{Binding HorarioAtual.FechamentoManhaTime}" />
+                        </Grid>
+
+                        <Label Text="Turno da Tarde" FontFamily="OpenSansSemibold" TextColor="{StaticResource Primary}" Margin="0,10,0,0" />
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="15">
+                            <material:TimePickerField Grid.Column="0" Title="Abertura" Time="{Binding HorarioAtual.AberturaTardeTime}" />
+                            <material:TimePickerField Grid.Column="1" Title="Fechamento" Time="{Binding HorarioAtual.FechamentoTardeTime}" />
+                        </Grid>
+
+                    </VerticalStackLayout>
+
+                </VerticalStackLayout>
+            </Border>
+
+            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" HorizontalOptions="Center" />
+
+            <VerticalStackLayout Spacing="10">
+                <Button Text="Salvar Horários" Command="{Binding SalvarCommand}" IsEnabled="{Binding IsNotBusy}" />
+                <Button Text="Cancelar" Command="{Binding CancelarCommand}" BackgroundColor="{StaticResource Alert}" IsEnabled="{Binding IsNotBusy}" />
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

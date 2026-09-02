@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:material="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialSymbols;assembly=UraniumUI.Icons.MaterialSymbols"
+             x:Class="CabeleleiraLeila.MainPage">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="20">
+
+            <Label Text="Cabeleleira Leila"
+                   Style="{StaticResource Headline}" />
+
+            <Label Text="Demonstração de Controles e Tema"
+                   Style="{StaticResource SubHeadline}" />
+
+            <Border StrokeThickness="1"
+                    Padding="20">
+                <VerticalStackLayout Spacing="16">
+
+                    <Label Text="Formulário de Agendamento"
+                           FontSize="18"
+                           FontFamily="OpenSansSemibold" />
+
+                    <material:TextField Title="Nome do Cliente">
+                        <material:TextField.Icon>
+                            <FontImageSource FontFamily="MaterialSharp" Glyph="{x:Static m:MaterialSharp.Person}" />
+                        </material:TextField.Icon>
+                    </material:TextField>
+
+                    <material:TextField Title="Telefone / WhatsApp"
+                                        Keyboard="Telephone">
+                        <material:TextField.Icon>
+                            <FontImageSource FontFamily="MaterialSharp" Glyph="{x:Static m:MaterialSharp.Smartphone}" />
+                        </material:TextField.Icon>
+                    </material:TextField>
+
+                    <material:DatePickerField Title="Data do Atendimento">
+                        <material:DatePickerField.Icon>
+                            <FontImageSource FontFamily="MaterialSharp" Glyph="{x:Static m:MaterialSharp.Calendar_today}" />
+                        </material:DatePickerField.Icon>
+                    </material:DatePickerField>
+
+                    <material:PickerField Title="Serviço Desejado">
+                        <material:PickerField.Icon>
+                            <FontImageSource FontFamily="MaterialSharp" Glyph="{x:Static m:MaterialSharp.Content_cut}" />
+                        </material:PickerField.Icon>
+                        <material:PickerField.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>Corte Feminino</x:String>
+                                <x:String>Corte Masculino</x:String>
+                                <x:String>Coloração / Mechas</x:String>
+                                <x:String>Hidratação Profunda</x:String>
+                                <x:String>Escova e Penteado</x:String>
+                            </x:Array>
+                        </material:PickerField.ItemsSource>
+                    </material:PickerField>
+
+                    <material:EditorField Title="Observações (Preferências, alergias a produtos, etc.)" />
+
+                </VerticalStackLayout>
+            </Border>
+
+            <Border StrokeThickness="1"
+                    Padding="20">
+                <VerticalStackLayout Spacing="16">
+
+                    <Label Text="Preferências e Opções"
+                           FontSize="18"
+                           FontFamily="OpenSansSemibold" />
+
+                    <Grid ColumnDefinitions="*, Auto" VerticalOptions="Center">
+                        <Label Text="Receber lembrete por SMS"
+                               VerticalOptions="Center" />
+                        <Switch Grid.Column="1" IsToggled="True" />
+                    </Grid>
+
+                    <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                        <CheckBox IsChecked="True" />
+                        <Label Text="Cliente de primeira viagem"
+                               VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Nível de urgência / Tempo estimado" />
+                        <Slider Minimum="0"
+                                Maximum="100"
+                                Value="40" />
+                    </VerticalStackLayout>
+
+                    <HorizontalStackLayout Spacing="12" VerticalOptions="Center">
+                        <ActivityIndicator IsRunning="True"
+                                           WidthRequest="24"
+                                           HeightRequest="24" />
+                        <Label Text="Sincronizando agenda..."
+                               VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+
+                </VerticalStackLayout>
+            </Border>
+
+            <Button Text="Confirmar Agendamento"
+                    Clicked="Button_Clicked"
+                    HorizontalOptions="Fill" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialSymbols;assembly=UraniumUI.Icons.MaterialSymbols"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="CabeleleiraLeila.Views.Cliente.AgendamentoDetalheClientePage"
+             Title="{Binding Title}">
+
+    <ContentPage.Resources>
+        <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+
+            
+            <VerticalStackLayout IsVisible="{Binding IsModoEdicao, Converter={StaticResource InvertedBoolConverter}}" Spacing="20">
+
+                
+                <Border Padding="15" StrokeThickness="0" BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}">
+                    <Border.Shadow>
+                        <Shadow Brush="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource BackgroundDark}}" Opacity="0.1" Radius="5" Offset="0,2" />
+                    </Border.Shadow>
+
+                    <Grid ColumnDefinitions="Auto, *" ColumnSpacing="15">
+                        <VerticalStackLayout Grid.Column="0" VerticalOptions="Center" WidthRequest="70" Spacing="2">
+                            <Label Text="{Binding AgendamentoAtual.DataFormatadaCurta}" FontSize="15" TextColor="{StaticResource Primary}" FontAttributes="Bold" HorizontalOptions="Center" />
+                            <Label Text="{Binding AgendamentoAtual.HoraInicioGeral}" FontFamily="OpenSansSemibold" FontSize="18" HorizontalOptions="Center" />
+                        </VerticalStackLayout>
+
+                        <BoxView Grid.Column="0" HorizontalOptions="End" WidthRequest="4" Color="{StaticResource Primary}" CornerRadius="2" />
+
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="4">
+                            <Label Text="{Binding AgendamentoAtual.Status}" FontFamily="OpenSansSemibold" FontSize="16" TextColor="{StaticResource PrimaryDark}" />
+                            <Label Text="{Binding AgendamentoAtual.ValorTotal, StringFormat='Total a pagar: R$ {0:F2}'}" FontSize="14" TextColor="{StaticResource TextSecondaryLight}" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+
+                
+                <Label Text="Serviços Contratados" FontFamily="OpenSansSemibold" FontSize="16" Margin="0,5,0,0" />
+
+                <VerticalStackLayout BindableLayout.ItemsSource="{Binding AgendamentoAtual.Itens}" Spacing="10">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <Border Padding="15" StrokeThickness="1" Stroke="{StaticResource TextSecondaryLight}" StrokeShape="RoundRectangle 8" BackgroundColor="Transparent">
+                                <Grid ColumnDefinitions="*, Auto" VerticalOptions="Center">
+                                    <VerticalStackLayout Grid.Column="0" Spacing="2">
+                                        <Label Text="{Binding ServicoNome}" FontFamily="OpenSansSemibold" FontSize="15" />
+                                        <HorizontalStackLayout Spacing="5">
+                                            <Label FontFamily="MaterialSharp" Text="{x:Static m:MaterialSharp.Schedule}" FontSize="14" TextColor="{StaticResource TextSecondaryLight}" VerticalOptions="Center"/>
+                                            <Label Text="{Binding HoraInicio}" FontSize="13" TextColor="{StaticResource TextSecondaryLight}" VerticalOptions="Center"/>
+                                        </HorizontalStackLayout>
+                                    </VerticalStackLayout>
+
+                                    <Label Grid.Column="1" Text="{Binding Valor, StringFormat='R$ {0:F2}'}" FontFamily="OpenSansSemibold" FontSize="15" VerticalOptions="Center" TextColor="{StaticResource Primary}" />
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+
+                
+                <Border IsVisible="{Binding AgendamentoAtual.PodeAlterar, Converter={StaticResource InvertedBoolConverter}}" BackgroundColor="#FEF2F2" Stroke="#EF4444" StrokeThickness="1" Padding="15" Margin="0,10,0,0">
+                    <Grid ColumnDefinitions="Auto, *">
+                        <Label Grid.Column="0" FontFamily="MaterialSharp" Text="{x:Static m:MaterialSharp.Warning}" FontSize="24" TextColor="#EF4444" VerticalOptions="Center" Margin="0,0,15,0" />
+                        <Label Grid.Column="1" Text="Faltam menos de 2 dias. Alterações ou cancelamentos só podem ser feitos ligando para o salão." TextColor="#B91C1C" FontSize="13" VerticalOptions="Center" />
+                    </Grid>
+                </Border>
+
+                
+                <Grid ColumnDefinitions="*, *" ColumnSpacing="15" IsVisible="{Binding MostrarBotoesAcao}" Margin="0,15,0,20">
+                    <Button Grid.Column="0" Text="Reagendar" Command="{Binding AlternarModoEdicaoCommand}" Padding="5">
+                        <Button.ImageSource>
+                            <FontImageSource FontFamily="MaterialSharp" Glyph="{x:Static m:MaterialSharp.Edit_calendar}" Color="{StaticResource OnPrimary}" />
+                        </Button.ImageSource>
+                    </Button>
+
+                    <Button Grid.Column="1" Text="Cancelar" Command="{Binding SolicitarCancelamentoCommand}" BackgroundColor="Transparent" TextColor="{StaticResource Alert}" BorderColor="{StaticResource Alert}" BorderWidth="1" Padding="5">
+                        <Button.ImageSource>
+                            <FontImageSource FontFamily="MaterialSharp" Glyph="{x:Static m:MaterialSharp.Event_busy}" Color="{StaticResource Alert}" />
+                        </Button.ImageSource>
+                    </Button>
+                </Grid>
+
+            </VerticalStackLayout>
+
+
+            <VerticalStackLayout IsVisible="{Binding IsModoEdicao}" Spacing="20">
+
+                <Label Text="Altere seus serviços e novo horário:" FontFamily="OpenSansSemibold" FontSize="16" TextColor="{StaticResource PrimaryDark}" />
+
+                
+                <Border Padding="18">
+                    <VerticalStackLayout Spacing="14">
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding CategoriasDisponiveis}" Spacing="18">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <VerticalStackLayout Spacing="8">
+                                        <Label Text="{Binding NomeCategoria}" FontFamily="OpenSansSemibold" FontSize="15" TextColor="{StaticResource Primary}" />
+                                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding Servicos}" Spacing="8">
+                                            <BindableLayout.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Border Padding="10,8" StrokeThickness="0" BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource SurfaceDark}}">
+                                                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                                                            <CheckBox Grid.Column="0" IsChecked="{Binding IsSelected}" VerticalOptions="Center" />
+                                                            <Label Grid.Column="1" Text="{Binding Servico.Nome}" VerticalOptions="Center" />
+                                                            <Label Grid.Column="2" Text="{Binding Servico.Preco, StringFormat='R$ {0:F2}'}" FontFamily="OpenSansSemibold" FontSize="13" HorizontalTextAlignment="End" VerticalOptions="Center" TextColor="{StaticResource Primary}" />
+                                                        </Grid>
+                                                    </Border>
+                                                </DataTemplate>
+                                            </BindableLayout.ItemTemplate>
+                                        </VerticalStackLayout>
+                                    </VerticalStackLayout>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+
+                        
+                        <Grid ColumnDefinitions="*, Auto" Margin="0,10,0,0" IsVisible="{Binding TemServicoSelecionado}">
+                            <Label Text="Total Novo:" FontFamily="OpenSansSemibold" FontSize="16" VerticalOptions="Center" />
+                            <Label Grid.Column="1" Text="{Binding ValorTotalEdicao, StringFormat='R$ {0:F2}'}" FontFamily="OpenSansSemibold" FontSize="18" TextColor="{StaticResource Primary}" VerticalOptions="Center" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                
+                <Border Padding="18" IsVisible="{Binding TemServicoSelecionado}">
+                    <VerticalStackLayout Spacing="14">
+
+                        <Label Text="Datas Disponíveis" FontSize="14" TextColor="{StaticResource TextSecondaryLight}" />
+                        <CollectionView ItemsSource="{Binding DiasDisponiveis}" SelectedItem="{Binding DiaSelecionado, Mode=TwoWay}" SelectionMode="Single" HeightRequest="45" HorizontalScrollBarVisibility="Never">
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10" />
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Stroke="{StaticResource Primary}" StrokeThickness="1" StrokeShape="RoundRectangle 8" WidthRequest="110" Padding="0">
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup x:Name="CommonStates">
+                                                <VisualState x:Name="Normal">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="BackgroundColor" Value="Transparent" />
+                                                        <Setter TargetName="DateLabel" Property="Label.TextColor" Value="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                                <VisualState x:Name="Selected">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+                                                        <Setter TargetName="DateLabel" Property="Label.TextColor" Value="{StaticResource OnPrimary}" />
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                        <Label x:Name="DateLabel" Text="{Binding DataFormatada}" HorizontalOptions="Center" VerticalOptions="Center" FontFamily="OpenSansSemibold" FontSize="14" />
+                                    </Border>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+
+                        
+                        <Label Text="Horários" FontSize="14" TextColor="{StaticResource TextSecondaryLight}" Margin="0,10,0,0" />
+                        <CollectionView ItemsSource="{Binding HorariosDisponiveis}" SelectedItem="{Binding HorarioSelecionado, Mode=TwoWay}" SelectionMode="Single" HeightRequest="45" HorizontalScrollBarVisibility="Never">
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10" />
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Stroke="{StaticResource Primary}" StrokeThickness="1" StrokeShape="RoundRectangle 8" WidthRequest="70" Padding="0">
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup x:Name="CommonStates">
+                                                <VisualState x:Name="Normal">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="BackgroundColor" Value="Transparent" />
+                                                        <Setter TargetName="TimeLabel" Property="Label.TextColor" Value="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                                <VisualState x:Name="Selected">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+                                                        <Setter TargetName="TimeLabel" Property="Label.TextColor" Value="{StaticResource OnPrimary}" />
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                        <Label x:Name="TimeLabel" Text="{Binding .}" HorizontalOptions="Center" VerticalOptions="Center" FontFamily="OpenSansSemibold" FontSize="14" />
+                                    </Border>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </VerticalStackLayout>
+                </Border>
+
+                
+                <VerticalStackLayout Spacing="10" Margin="0,10,0,20">
+                    <Button Text="Confirmar Novo Agendamento" Command="{Binding SalvarAlteracaoCommand}" BackgroundColor="{StaticResource Primary}" />
+                    <Button Text="Cancelar Edição" Command="{Binding AlternarModoEdicaoCommand}" BackgroundColor="Transparent" TextColor="{StaticResource TextSecondaryLight}" />
+                </VerticalStackLayout>
+
+            </VerticalStackLayout>
+
+            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" HorizontalOptions="Center" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

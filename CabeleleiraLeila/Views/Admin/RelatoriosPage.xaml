@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialSymbols;assembly=UraniumUI.Icons.MaterialSymbols"
+             x:Class="CabeleleiraLeila.Views.Admin.RelatoriosPage"
+             Title="{Binding Title}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+
+            
+            <Border Padding="15,10" StrokeThickness="1" Stroke="{StaticResource TextSecondaryLight}" StrokeShape="RoundRectangle 8" Margin="0,0,0,10">
+                <Grid ColumnDefinitions="*, Auto, *" VerticalOptions="Center">
+
+                    <VerticalStackLayout Grid.Column="0" HorizontalOptions="Center">
+                        <Label Text="Data Inicial" FontSize="12" TextColor="{StaticResource TextSecondaryLight}" HorizontalOptions="Center" />
+                        <DatePicker Date="{Binding DataInicial}" Format="dd/MM/yyyy" FontAttributes="Bold" TextColor="{StaticResource Primary}" />
+                    </VerticalStackLayout>
+
+                    <Label Grid.Column="1" Text="até" VerticalOptions="Center" Margin="10,0,10,-10" TextColor="{StaticResource TextSecondaryLight}" />
+
+                    <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center">
+                        <Label Text="Data Final" FontSize="12" TextColor="{StaticResource TextSecondaryLight}" HorizontalOptions="Center"/>
+                        <DatePicker Date="{Binding DataFinal}" Format="dd/MM/yyyy" FontAttributes="Bold" TextColor="{StaticResource Primary}" />
+                    </VerticalStackLayout>
+
+                </Grid>
+            </Border>
+
+            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" HorizontalOptions="Center" />
+
+            
+            <Grid ColumnDefinitions="*, *" ColumnSpacing="15">
+
+                
+                <Border Grid.Column="0" Padding="15" StrokeThickness="0" BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}">
+                    <Border.Shadow>
+                        <Shadow Brush="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource BackgroundDark}}" Opacity="0.1" Radius="5" Offset="0,2" />
+                    </Border.Shadow>
+                    <VerticalStackLayout Spacing="5" HorizontalOptions="Center">
+                        <Label FontFamily="MaterialSharp" Text="{x:Static m:MaterialSharp.Payments}" FontSize="24" TextColor="#10B981" HorizontalOptions="Center" />
+                        <Label Text="Faturamento" FontSize="12" TextColor="{StaticResource TextSecondaryLight}" HorizontalOptions="Center" />
+                        <Label Text="{Binding FaturamentoTotal, StringFormat='R$ {0:F2}'}" FontFamily="OpenSansSemibold" FontSize="18" HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </Border>
+
+                
+                <Border Grid.Column="1" Padding="15" StrokeThickness="0" BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}">
+                    <Border.Shadow>
+                        <Shadow Brush="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource BackgroundDark}}" Opacity="0.1" Radius="5" Offset="0,2" />
+                    </Border.Shadow>
+                    <VerticalStackLayout Spacing="5" HorizontalOptions="Center">
+                        <Label FontFamily="MaterialSharp" Text="{x:Static m:MaterialSharp.Groups}" FontSize="24" TextColor="{StaticResource Primary}" HorizontalOptions="Center" />
+                        <Label Text="Atendimentos" FontSize="12" TextColor="{StaticResource TextSecondaryLight}" HorizontalOptions="Center" />
+                        <Label Text="{Binding QtdAtendimentos}" FontFamily="OpenSansSemibold" FontSize="18" HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </Border>
+
+            </Grid>
+
+            
+            <Label Text="Top Serviços Concluídos" FontFamily="OpenSansSemibold" FontSize="16" Margin="0,15,0,5" />
+
+            <Label Text="Nenhum atendimento concluído neste período." IsVisible="{Binding SemServicos}" FontSize="13" TextColor="{StaticResource TextSecondaryLight}" HorizontalOptions="Center" Margin="0,20,0,0" />
+
+            
+            <VerticalStackLayout BindableLayout.ItemsSource="{Binding ServicosMaisBuscados}" Spacing="10">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <Border Padding="15" StrokeThickness="1" Stroke="{StaticResource TextSecondaryLight}" StrokeShape="RoundRectangle 8">
+                            <Grid ColumnDefinitions="*, Auto">
+                                <Label Grid.Column="0" Text="{Binding Nome}" FontFamily="OpenSansSemibold" VerticalOptions="Center" />
+                                <HorizontalStackLayout Grid.Column="1" Spacing="5" VerticalOptions="Center">
+                                    <Label Text="{Binding Qtd}" FontFamily="OpenSansSemibold" TextColor="{StaticResource Primary}" VerticalOptions="Center" />
+                                    <Label Text="vezes" FontSize="12" TextColor="{StaticResource TextSecondaryLight}" VerticalOptions="Center" />
+                                </HorizontalStackLayout>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

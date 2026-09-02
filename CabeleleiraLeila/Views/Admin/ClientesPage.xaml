@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialSymbols;assembly=UraniumUI.Icons.MaterialSymbols"
+             x:Class="CabeleleiraLeila.Views.Admin.ClientesPage"
+             Title="{Binding Title}">
+
+    <Grid>
+
+
+            <RefreshView
+                IsRefreshing="{Binding IsBusy}"
+                Command="{Binding CarregarDadosCommand}">
+
+        <VerticalStackLayout Padding="20">
+                <CollectionView
+                    ItemsSource="{Binding Clientes}"
+                    SelectionMode="None">
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+
+                            <Border
+                                Padding="15"
+                                Margin="0,0,0,10"
+                                StrokeThickness="0"
+                                BackgroundColor="{AppThemeBinding 
+                                    Light={StaticResource SurfaceLight}, 
+                                    Dark={StaticResource SurfaceDark}}">
+
+                                <Grid
+                                    ColumnDefinitions="*, Auto"
+                                    ColumnSpacing="15">
+
+                                    <VerticalStackLayout
+                                        Grid.Column="0"
+                                        VerticalOptions="Center"
+                                        Spacing="2">
+
+                                        <Label
+                                            Text="{Binding Nome}"
+                                            FontFamily="OpenSansSemibold"
+                                            FontSize="16" />
+
+                                        <Label
+                                            Text="{Binding Telefone}"
+                                            FontSize="13"
+                                            TextColor="{StaticResource TextSecondaryLight}" />
+
+                                        <Label
+                                            Text="{Binding IsAtivo, StringFormat='Status: {0}'}"
+                                            FontSize="12"
+                                            Margin="0,4,0,0">
+
+                                            <Label.Triggers>
+
+                                                <DataTrigger
+                                                    TargetType="Label"
+                                                    Binding="{Binding IsAtivo}"
+                                                    Value="True">
+
+                                                    <Setter
+                                                        Property="Text"
+                                                        Value="Ativo" />
+
+                                                    <Setter
+                                                        Property="TextColor"
+                                                        Value="{StaticResource Success}" />
+
+                                                </DataTrigger>
+
+                                                <DataTrigger
+                                                    TargetType="Label"
+                                                    Binding="{Binding IsAtivo}"
+                                                    Value="False">
+
+                                                    <Setter
+                                                        Property="Text"
+                                                        Value="Inativo" />
+
+                                                    <Setter
+                                                        Property="TextColor"
+                                                        Value="{StaticResource Error}" />
+
+                                                </DataTrigger>
+
+                                            </Label.Triggers>
+
+                                        </Label>
+
+                                    </VerticalStackLayout>
+
+                                    <HorizontalStackLayout
+                                        Grid.Column="1"
+                                        Spacing="5"
+                                        VerticalOptions="Center">
+
+                                        <ImageButton
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type CollectionView}}, Path=BindingContext.EditarClienteCommand}"
+                                            CommandParameter="{Binding .}"
+                                            BackgroundColor="Transparent"
+                                            Padding="5">
+
+                                            <ImageButton.Source>
+                                                <FontImageSource
+                                                    FontFamily="MaterialSharp"
+                                                    Glyph="{x:Static m:MaterialSharp.Edit}"
+                                                    Color="{StaticResource Primary}" />
+                                            </ImageButton.Source>
+
+                                        </ImageButton>
+
+                                        <ImageButton
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type CollectionView}}, Path=BindingContext.ExcluirClienteCommand}"
+                                            CommandParameter="{Binding .}"
+                                            BackgroundColor="Transparent"
+                                            Padding="5">
+
+                                            <ImageButton.Source>
+                                                <FontImageSource
+                                                    FontFamily="MaterialSharp"
+                                                    Glyph="{x:Static m:MaterialSharp.Delete}"
+                                                    Color="{StaticResource Error}" />
+                                            </ImageButton.Source>
+
+                                        </ImageButton>
+
+                                    </HorizontalStackLayout>
+
+                                </Grid>
+
+                            </Border>
+
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+
+                </CollectionView>
+
+        </VerticalStackLayout>
+            </RefreshView>
+
+
+        
+        <ImageButton
+            Command="{Binding NovoClienteCommand}"
+            BackgroundColor="{StaticResource Primary}"
+            CornerRadius="28"
+            WidthRequest="56"
+            HeightRequest="56"
+            HorizontalOptions="End"
+            VerticalOptions="End"
+            Margin="20"
+            Shadow="{Shadow 
+                Brush={StaticResource Primary}, 
+                Radius=10, 
+                Opacity=0.4, 
+                Offset='0,5'}">
+
+            <ImageButton.Source>
+                <FontImageSource
+                    FontFamily="MaterialSharp"
+                    Glyph="{x:Static m:MaterialSharp.Add}"
+                    Color="{StaticResource OnPrimary}" />
+            </ImageButton.Source>
+
+        </ImageButton>
+
+    </Grid>
+
+</ContentPage>

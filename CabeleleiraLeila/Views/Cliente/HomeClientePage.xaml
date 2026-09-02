@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialSymbols;assembly=UraniumUI.Icons.MaterialSymbols"
+             x:Class="CabeleleiraLeila.Views.Cliente.HomeClientePage"
+             NavigationPage.HasNavigationBar="False"
+             Title="">
+
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsVisible="False" />
+    </Shell.BackButtonBehavior>
+
+    <Grid RowDefinitions="Auto, *">
+
+        
+        <Grid Grid.Row="0" HeightRequest="160">
+            <Path Fill="{StaticResource Primary}" Aspect="Fill"
+                  Data="M 0,0 L 100,0 L 100,70 Q 50,100 0,70 Z" />
+
+            
+            <Grid Padding="20,40,20,0" ColumnDefinitions="*, Auto" VerticalOptions="Start">
+
+                <HorizontalStackLayout Grid.Column="0" Spacing="15">
+                    <Border WidthRequest="60" HeightRequest="60" StrokeThickness="0" StrokeShape="RoundRectangle 30" BackgroundColor="{StaticResource SurfaceLight}">
+                        <Label Text="👤" FontSize="30" HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Border>
+                    <VerticalStackLayout VerticalOptions="Center">
+                        <Label Text="{Binding Saudacao, StringFormat='{0},'}" FontSize="14" TextColor="{StaticResource SurfaceLight}" Opacity="0.9" />
+                        <Label Text="{Binding NomeCliente}" FontFamily="OpenSansSemibold" FontSize="22" TextColor="{StaticResource OnPrimary}" />
+                    </VerticalStackLayout>
+                </HorizontalStackLayout>
+
+                
+                <ImageButton Grid.Column="1" 
+                             Command="{Binding SairCommand}" 
+                             BackgroundColor="Transparent" 
+                             WidthRequest="44" 
+                             HeightRequest="44" 
+                             VerticalOptions="Center">
+                    <ImageButton.Source>
+                        <FontImageSource FontFamily="MaterialSharp" Glyph="{x:Static m:MaterialSharp.Logout}" Color="{StaticResource SurfaceLight}" />
+                    </ImageButton.Source>
+                </ImageButton>
+
+            </Grid>
+        </Grid>
+
+        <!-- CORPO DA PÁGINA -->
+        <ScrollView Grid.Row="1" Margin="0,-20,0,0">
+            <VerticalStackLayout Padding="20" Spacing="25">
+
+                <!-- CARD PRINCIPAL: NOVO AGENDAMENTO -->
+                <Border Padding="20" StrokeThickness="0" BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NovoAgendamentoCommand}" />
+                    </Border.GestureRecognizers>
+                    <Border.Shadow>
+                        <Shadow Brush="{StaticResource Primary}" Opacity="0.2" Radius="10" Offset="0,4" />
+                    </Border.Shadow>
+
+                    <Grid ColumnDefinitions="*, Auto" VerticalOptions="Center">
+                        <VerticalStackLayout Grid.Column="0" Spacing="5">
+                            <Label Text="Agendar Horário" FontFamily="OpenSansSemibold" FontSize="18" TextColor="{StaticResource Primary}" />
+                            <Label Text="Escolha seus serviços e garanta seu horário de forma rápida." FontSize="13" TextColor="{StaticResource TextSecondaryLight}" />
+                        </VerticalStackLayout>
+
+                        <Border Grid.Column="1" BackgroundColor="{StaticResource Primary}" WidthRequest="50" HeightRequest="50" StrokeShape="RoundRectangle 25" StrokeThickness="0">
+                            <Label FontFamily="MaterialSharp" Text="{x:Static m:MaterialSharp.Arrow_forward}" FontSize="24" TextColor="{StaticResource OnPrimary}" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                    </Grid>
+                </Border>
+
+                <!-- LISTA DE PRÓXIMOS AGENDAMENTOS -->
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Seus Próximos Horários" FontFamily="OpenSansSemibold" FontSize="16" />
+
+                    <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" HorizontalOptions="Center" />
+
+                    <Border IsVisible="{Binding SemProximosAgendamentos}" Padding="15" StrokeThickness="1" Stroke="{StaticResource TextSecondaryLight}" StrokeShape="RoundRectangle 8" BackgroundColor="Transparent">
+                        <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                            <Label FontFamily="MaterialSharp" Text="{x:Static m:MaterialSharp.Event_busy}" FontSize="20" TextColor="{StaticResource TextSecondaryLight}" VerticalOptions="Center" />
+                            <Label Text="Você não possui horários marcados." FontSize="13" TextColor="{StaticResource TextSecondaryLight}" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                    </Border>
+
+                    <CollectionView ItemsSource="{Binding ProximosAgendamentos}" SelectionMode="None">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Border Padding="15" Margin="0,0,0,10" StrokeThickness="0" BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}">
+
+                                    <!-- AQUI INJETAMOS O CLIQUE PARA ABRIR O CARD DO AGENDAMENTO -->
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type CollectionView}}, Path=BindingContext.AbrirAgendamentoCommand}" CommandParameter="{Binding .}" />
+                                    </Border.GestureRecognizers>
+
+                                    <Border.Shadow>
+                                        <Shadow Brush="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource BackgroundDark}}" Opacity="0.05" Radius="5" Offset="0,2" />
+                                    </Border.Shadow>
+
+                                    <Grid ColumnDefinitions="Auto, *" ColumnSpacing="15">
+                                        <!-- Data em destaque -->
+                                        <Border Grid.Column="0" BackgroundColor="#EEF2FF" StrokeThickness="0" Padding="10,5" StrokeShape="RoundRectangle 8" WidthRequest="70">
+                                            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                                <Label Text="{Binding DataFormatadaCurta}" FontSize="12" TextColor="{StaticResource Primary}" FontAttributes="Bold" HorizontalOptions="Center" />
+                                                <Label Text="{Binding HoraInicioGeral}" FontSize="11" TextColor="{StaticResource Primary}" HorizontalOptions="Center" />
+                                            </VerticalStackLayout>
+                                        </Border>
+
+                                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                                            <Label Text="{Binding Status}" FontSize="12" FontAttributes="Bold" TextColor="{StaticResource Primary}" />
+                                            <Label Text="{Binding ValorTotal, StringFormat='Valor Total: R$ {0:F2}'}" FontSize="13" TextColor="{StaticResource TextSecondaryLight}" />
+                                        </VerticalStackLayout>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+                    <Button Text="Ver Histórico Completo" Command="{Binding VerHistoricoCommand}" BackgroundColor="Transparent" TextColor="{StaticResource Primary}" BorderColor="{StaticResource Primary}" BorderWidth="1" Margin="0,15,0,0" />
+                </VerticalStackLayout>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

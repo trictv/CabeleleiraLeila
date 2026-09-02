@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:m="clr-namespace:UraniumUI.Icons.MaterialSymbols;assembly=UraniumUI.Icons.MaterialSymbols"
+    x:Class="CabeleleiraLeila.Views.Admin.ServicosPage"
+    Title="{Binding Title}">
+
+    <Grid>
+        <RefreshView
+                IsRefreshing="{Binding IsBusy}"
+                Command="{Binding CarregarDadosCommand}">
+            <VerticalStackLayout Padding="20">
+
+
+                <CollectionView ItemsSource="{Binding Servicos}" SelectionMode="None">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border Padding="15" Margin="0,0,0,10" StrokeThickness="0" BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}">
+                                <Border.Shadow>
+                                    <Shadow Brush="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource BackgroundDark}}" Opacity="0.1" Radius="5" Offset="0,2" />
+                                </Border.Shadow>
+
+                                <Grid ColumnDefinitions="*, Auto, Auto" ColumnSpacing="15" VerticalOptions="Center">
+
+                                    <VerticalStackLayout Grid.Column="0" VerticalOptions="Center" Spacing="2">
+                                        <Label Text="{Binding Nome}" FontFamily="OpenSansSemibold" FontSize="16" />
+                                        <Label Text="{Binding CategoriaNome}" FontSize="12" TextColor="{StaticResource Primary}" />
+
+                                        <HorizontalStackLayout Spacing="10" Margin="0,4,0,0">
+                                            <Label Text="{Binding DuracaoMinutos, StringFormat='{0} min'}" FontSize="13" TextColor="{StaticResource TextSecondaryLight}" />
+                                            <Label Text="|" TextColor="{StaticResource TextSecondaryLight}" />
+                                            <Label Text="{Binding Preco, StringFormat='R$ {0:F2}'}" FontSize="13" FontFamily="OpenSansSemibold" TextColor="{StaticResource TextSecondaryLight}" />
+                                        </HorizontalStackLayout>
+
+                                        <Label Text="{Binding IsAtivo, StringFormat='Status: {0}'}" FontSize="12" Margin="0,4,0,0">
+                                            <Label.Triggers>
+                                                <DataTrigger TargetType="Label" Binding="{Binding IsAtivo}" Value="True">
+                                                    <Setter Property="Text" Value="Ativo" />
+                                                    <Setter Property="TextColor" Value="{StaticResource Success}" />
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Label" Binding="{Binding IsAtivo}" Value="False">
+                                                    <Setter Property="Text" Value="Inativo" />
+                                                    <Setter Property="TextColor" Value="{StaticResource Error}" />
+                                                </DataTrigger>
+                                            </Label.Triggers>
+                                        </Label>
+                                    </VerticalStackLayout>
+
+                                    <ImageButton Grid.Column="1" Command="{Binding Source={RelativeSource AncestorType={x:Type CollectionView}}, Path=BindingContext.EditarServicoCommand}" CommandParameter="{Binding .}" BackgroundColor="Transparent" Padding="5">
+                                        <ImageButton.Source>
+                                            <FontImageSource FontFamily="MaterialSharp" Glyph="{x:Static m:MaterialSharp.Edit}" Color="{StaticResource Primary}" />
+                                        </ImageButton.Source>
+                                    </ImageButton>
+
+                                    <ImageButton Grid.Column="2" Command="{Binding Source={RelativeSource AncestorType={x:Type CollectionView}}, Path=BindingContext.ExcluirServicoCommand}" CommandParameter="{Binding .}" BackgroundColor="Transparent" Padding="5">
+                                        <ImageButton.Source>
+                                            <FontImageSource FontFamily="MaterialSharp" Glyph="{x:Static m:MaterialSharp.Delete}" Color="{StaticResource Error}" />
+                                        </ImageButton.Source>
+                                    </ImageButton>
+
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+            </VerticalStackLayout>
+
+        </RefreshView>
+
+        <ImageButton Command="{Binding NovoServicoCommand}"
+                     BackgroundColor="{StaticResource Primary}"
+                     CornerRadius="28" WidthRequest="56" HeightRequest="56"
+                     HorizontalOptions="End" VerticalOptions="End" Margin="20"
+                     Shadow="{Shadow Brush={StaticResource Primary}, Radius=10, Opacity=0.4, Offset='0,5'}">
+            <ImageButton.Source>
+                <FontImageSource FontFamily="MaterialSharp" Glyph="{x:Static m:MaterialSharp.Add}" Color="{StaticResource OnPrimary}" />
+            </ImageButton.Source>
+        </ImageButton>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialSymbols;assembly=UraniumUI.Icons.MaterialSymbols"
+             x:Class="CabeleleiraLeila.Views.Admin.ExpedientePage"
+             Title="{Binding Title}">
+
+    <ScrollView>
+
+        <RefreshView
+                IsRefreshing="{Binding IsBusy}"
+                Command="{Binding CarregarDadosCommand}">
+
+            <VerticalStackLayout Padding="20" Spacing="15">
+                <Label Text="Configure os horários de funcionamento. Os clientes só poderão agendar serviços dentro das janelas de tempo abertas abaixo." 
+                   FontSize="14" TextColor="{StaticResource TextSecondaryLight}" Margin="0,0,0,10" />
+
+                <CollectionView ItemsSource="{Binding DiasDaSemana}" SelectionMode="None">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            
+                            <Border Padding="15" Margin="0,0,0,10" StrokeThickness="0" BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type CollectionView}}, Path=BindingContext.EditarDiaCommand}" CommandParameter="{Binding .}" />
+                                </Border.GestureRecognizers>
+                                <Border.Shadow>
+                                    <Shadow Brush="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource BackgroundDark}}" Opacity="0.1" Radius="5" Offset="0,2" />
+                                </Border.Shadow>
+
+                                <Grid ColumnDefinitions="*, Auto" ColumnSpacing="15" VerticalOptions="Center">
+                                    <VerticalStackLayout Grid.Column="0" VerticalOptions="Center" Spacing="4">
+                                        <Label Text="{Binding NomeDiaSemana}" FontFamily="OpenSansSemibold" FontSize="16" />
+
+                                        <Label Text="{Binding ResumoHorarios}" FontSize="13">
+                                            <Label.Triggers>
+                                                <DataTrigger TargetType="Label" Binding="{Binding IsAberto}" Value="True">
+                                                    <Setter Property="TextColor" Value="{StaticResource Primary}" />
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Label" Binding="{Binding IsAberto}" Value="False">
+                                                    <Setter Property="TextColor" Value="{StaticResource Alert}" />
+                                                </DataTrigger>
+                                            </Label.Triggers>
+                                        </Label>
+                                    </VerticalStackLayout>
+
+                                    <Label Grid.Column="1" FontFamily="MaterialSharp" Text="{x:Static m:MaterialSharp.Chevron_right}" FontSize="24" TextColor="{StaticResource TextSecondaryLight}" VerticalOptions="Center" />
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </RefreshView>
+    </ScrollView>
+</ContentPage>

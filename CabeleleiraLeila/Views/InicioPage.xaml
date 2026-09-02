@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:material="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
+    xmlns:m="clr-namespace:UraniumUI.Icons.MaterialSymbols;assembly=UraniumUI.Icons.MaterialSymbols"
+    x:Class="CabeleleiraLeila.Views.InicioPage">
+
+    <Grid>
+        <VerticalStackLayout 
+            Padding="24" 
+            Spacing="10" 
+            VerticalOptions="Center">
+
+            <Label 
+                Text="Cabelereira Leila" 
+                Style="{StaticResource Headline}" 
+                Margin="0,0,0,5" />
+
+            <Label 
+                Text="Cabelos, unhas, hidratação e unhas" 
+                Style="{StaticResource SubHeadline}" 
+                FontSize="16"
+                TextColor="{StaticResource TextSecondaryLight}"
+                Margin="0,0,0,40" />
+
+            <Button 
+                Text="Agendar Horário" 
+                Command="{Binding IrParaAgendamentoCommand}" 
+                HeightRequest="50"
+                Margin="0,0,0,16">
+                <Button.ImageSource>
+                    <FontImageSource FontFamily="MaterialSharp" Glyph="{x:Static m:MaterialSharp.Calendar_today}" />
+                </Button.ImageSource>
+            </Button>
+
+            <Button 
+                Text="Entrar" 
+                Command="{Binding IrParaLoginCommand}" 
+                BackgroundColor="Transparent"
+                TextColor="{StaticResource Primary}"
+                BorderColor="{StaticResource Primary}"
+                BorderWidth="2"
+                HeightRequest="50">
+                <Button.ImageSource>
+                    <FontImageSource FontFamily="MaterialSharp" Glyph="{x:Static m:MaterialSharp.Login}" Color="{StaticResource Primary}" />
+                </Button.ImageSource>
+            </Button>
+
+        </VerticalStackLayout>
+    </Grid>
+
+</ContentPage>

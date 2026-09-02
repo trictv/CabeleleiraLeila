@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:material="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialSymbols;assembly=UraniumUI.Icons.MaterialSymbols"
+             x:Class="CabeleleiraLeila.Views.Admin.AgendaPage"
+             Title="{Binding Title}">
+    <Grid>
+        <VerticalStackLayout Padding="20" Spacing="15">
+
+            <Border Padding="10,5" StrokeThickness="1" Stroke="{StaticResource TextSecondaryLight}" StrokeShape="RoundRectangle 8">
+                <Grid ColumnDefinitions="Auto, *">
+                    <Label FontFamily="MaterialSharp" Text="{x:Static m:MaterialSharp.Calendar_today}" VerticalOptions="Center" Margin="5,0,10,0" TextColor="{StaticResource Primary}"/>
+                    
+                    <DatePicker Grid.Column="1" Date="{Binding DataFiltro}" Format="dd 'de' MMMM, yyyy" TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" FontAttributes="Bold" />
+                </Grid>
+            </Border>
+
+            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" HorizontalOptions="Center" />
+
+            <Label Text="Nenhum agendamento para este dia." IsVisible="{Binding SemAgendamentos}" HorizontalOptions="Center" Margin="0,20,0,0" />
+
+            
+            <CollectionView ItemsSource="{Binding AgendamentosFiltrados}" SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Padding="15" Margin="0,0,0,10" StrokeThickness="0" BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type CollectionView}}, Path=BindingContext.AbrirDetalhesCommand}" CommandParameter="{Binding .}" />
+                            </Border.GestureRecognizers>
+                            <Border.Shadow>
+                                <Shadow Brush="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource BackgroundDark}}" Opacity="0.1" Radius="5" Offset="0,2" />
+                            </Border.Shadow>
+
+                            <Grid ColumnDefinitions="Auto, *" ColumnSpacing="15">
+
+                                
+                                <VerticalStackLayout Grid.Column="0" VerticalOptions="Center" WidthRequest="60">
+                                    <Label Text="{Binding HoraInicioGeral}" FontFamily="OpenSansSemibold" FontSize="18" HorizontalOptions="Center" />
+                                </VerticalStackLayout>
+
+                                
+                                <BoxView Grid.Column="0" HorizontalOptions="End" WidthRequest="4" Color="{Binding StatusColor}" CornerRadius="2" />
+
+                                
+                                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                                    <Label Text="{Binding ClienteNome}" FontFamily="OpenSansSemibold" FontSize="16" />
+                                    <Label Text="{Binding ResumoServicos}" FontSize="13" TextColor="{StaticResource TextSecondaryLight}" LineBreakMode="TailTruncation" />
+
+                                    <HorizontalStackLayout Spacing="10" Margin="0,5,0,0">
+                                        <Label Text="{Binding Status}" FontSize="11" FontAttributes="Bold" TextColor="{Binding StatusColor}" />
+                                        <Label Text="|" TextColor="{StaticResource TextSecondaryLight}" FontSize="11" />
+                                        <Label Text="{Binding ValorTotal, StringFormat='R$ {0:F2}'}" FontSize="12" FontFamily="OpenSansSemibold" />
+                                    </HorizontalStackLayout>
+                                </VerticalStackLayout>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+
+        
+        <ImageButton Command="{Binding NovoAgendamentoCommand}" BackgroundColor="{StaticResource Primary}" CornerRadius="28" WidthRequest="56" HeightRequest="56" HorizontalOptions="End" VerticalOptions="End" Margin="20" Shadow="{Shadow Brush={StaticResource Primary}, Radius=10, Opacity=0.4, Offset='0,5'}">
+            <ImageButton.Source>
+                <FontImageSource FontFamily="MaterialSharp" Glyph="{x:Static m:MaterialSharp.Add}" Color="{StaticResource OnPrimary}" />
+            </ImageButton.Source>
+        </ImageButton>
+    </Grid>
+</ContentPage>

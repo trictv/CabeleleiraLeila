@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:material="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
+    xmlns:m="clr-namespace:UraniumUI.Icons.MaterialSymbols;assembly=UraniumUI.Icons.MaterialSymbols"
+    x:Class="CabeleleiraLeila.Views.Admin.HomeAdminPage"
+    Title="{Binding Title}">
+
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsVisible="False" />
+    </Shell.BackButtonBehavior>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="24">
+
+            
+            <Grid ColumnDefinitions="*, Auto" Margin="0,10,0,10">
+                <VerticalStackLayout Grid.Column="0" Spacing="5" VerticalOptions="Center">
+                    <Label Text="Olá," FontSize="16" TextColor="{StaticResource TextSecondaryLight}" />
+                    <Label Text="{Binding NomeAdmin}" Style="{StaticResource Headline}" HorizontalOptions="Start" />
+                </VerticalStackLayout>
+
+                
+                <ImageButton Grid.Column="1" 
+                             Command="{Binding SairCommand}" 
+                             BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource SurfaceDark}}"
+                             CornerRadius="25"
+                             WidthRequest="50" HeightRequest="50">
+                    <ImageButton.Source>
+                        <FontImageSource FontFamily="MaterialSharp" Glyph="{x:Static m:MaterialSharp.Logout}" Color="{StaticResource Error}" />
+                    </ImageButton.Source>
+                </ImageButton>
+            </Grid>
+
+            <Label Text="Acesso Rápido" FontFamily="OpenSansSemibold" FontSize="18" />
+
+            
+            <Grid RowDefinitions="Auto, Auto, Auto" ColumnDefinitions="*, *" RowSpacing="15" ColumnSpacing="15">
+
+                
+                <Border Grid.Row="0" Grid.Column="0" Padding="15" StrokeThickness="0" BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding IrParaAgendamentosCommand}" />
+                    </Border.GestureRecognizers>
+                    <Border.Shadow>
+                        <Shadow Brush="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource BackgroundDark}}" Opacity="0.1" Radius="10" Offset="0,4" />
+                    </Border.Shadow>
+
+                    <VerticalStackLayout Spacing="10" HorizontalOptions="Center" VerticalOptions="Center">
+                        <Label FontFamily="MaterialSharp" Text="{x:Static m:MaterialSharp.Event_note}" FontSize="40" TextColor="{StaticResource Primary}" HorizontalOptions="Center" />
+                        <Label Text="Agenda" FontFamily="OpenSansSemibold" FontSize="15" HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </Border>
+
+                
+                <Border Grid.Row="0" Grid.Column="1" Padding="15" StrokeThickness="0" BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding IrParaExpedienteCommand}" />
+                    </Border.GestureRecognizers>
+                    <Border.Shadow>
+                        <Shadow Brush="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource BackgroundDark}}" Opacity="0.1" Radius="10" Offset="0,4" />
+                    </Border.Shadow>
+
+                    <VerticalStackLayout Spacing="10" HorizontalOptions="Center" VerticalOptions="Center">
+                        <Label FontFamily="MaterialSharp" Text="{x:Static m:MaterialSharp.Schedule}" FontSize="40" TextColor="{StaticResource Primary}" HorizontalOptions="Center" />
+                        <Label Text="Expediente" FontFamily="OpenSansSemibold" FontSize="15" HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </Border>
+
+                
+                <Border Grid.Row="1" Grid.Column="0" Padding="15" StrokeThickness="0" BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding IrParaServicosCommand}" />
+                    </Border.GestureRecognizers>
+                    <Border.Shadow>
+                        <Shadow Brush="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource BackgroundDark}}" Opacity="0.1" Radius="10" Offset="0,4" />
+                    </Border.Shadow>
+
+                    <VerticalStackLayout Spacing="10" HorizontalOptions="Center" VerticalOptions="Center">
+                        <Label FontFamily="MaterialSharp" Text="{x:Static m:MaterialSharp.Content_cut}" FontSize="40" TextColor="{StaticResource Primary}" HorizontalOptions="Center" />
+                        <Label Text="Serviços" FontFamily="OpenSansSemibold" FontSize="15" HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </Border>
+
+                
+                <Border Grid.Row="1" Grid.Column="1" Padding="15" StrokeThickness="0" BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding IrParaCategoriasCommand}" />
+                    </Border.GestureRecognizers>
+                    <Border.Shadow>
+                        <Shadow Brush="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource BackgroundDark}}" Opacity="0.1" Radius="10" Offset="0,4" />
+                    </Border.Shadow>
+
+                    <VerticalStackLayout Spacing="10" HorizontalOptions="Center" VerticalOptions="Center">
+                        <Label FontFamily="MaterialSharp" Text="{x:Static m:MaterialSharp.Category}" FontSize="40" TextColor="{StaticResource Primary}" HorizontalOptions="Center" />
+                        <Label Text="Categorias" FontFamily="OpenSansSemibold" FontSize="15" HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </Border>
+
+                
+                <Border Grid.Row="2" Grid.Column="0" Padding="15" StrokeThickness="0" BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding IrParaRelatoriosCommand}" />
+                    </Border.GestureRecognizers>
+                    <Border.Shadow>
+                        <Shadow Brush="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource BackgroundDark}}" Opacity="0.1" Radius="10" Offset="0,4" />
+                    </Border.Shadow>
+
+                    <VerticalStackLayout Spacing="10" HorizontalOptions="Center" VerticalOptions="Center">
+                        <Label FontFamily="MaterialSharp" Text="{x:Static m:MaterialSharp.Insights}" FontSize="40" TextColor="{StaticResource Primary}" HorizontalOptions="Center" />
+                        <Label Text="Relatórios" FontFamily="OpenSansSemibold" FontSize="15" HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </Border>
+
+                
+                <Border Grid.Row="2" Grid.Column="1" Padding="15" StrokeThickness="0" BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding IrParaClientesCommand}" />
+                    </Border.GestureRecognizers>
+                    <Border.Shadow>
+                        <Shadow Brush="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource BackgroundDark}}" Opacity="0.1" Radius="10" Offset="0,4" />
+                    </Border.Shadow>
+
+                    <VerticalStackLayout Spacing="10" HorizontalOptions="Center" VerticalOptions="Center">
+                        <Label FontFamily="MaterialSharp" Text="{x:Static m:MaterialSharp.Groups}" FontSize="40" TextColor="{StaticResource Primary}" HorizontalOptions="Center" />
+                        <Label Text="Clientes" FontFamily="OpenSansSemibold" FontSize="15" HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </Border>
+
+            </Grid>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

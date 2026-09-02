@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:material="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
+    x:Class="CabeleleiraLeila.Views.Admin.ServicoFormPage"
+    Title="{Binding Title}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="24">
+
+            <Border Padding="20" StrokeThickness="0" BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}">
+                <Border.Shadow>
+                    <Shadow Brush="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource BackgroundDark}}" Opacity="0.1" Radius="10" Offset="0,4" />
+                </Border.Shadow>
+
+                <VerticalStackLayout Spacing="18">
+
+                    <material:TextField Title="Nome do Serviço" Text="{Binding ServicoAtual.Nome}" />
+
+                    <material:PickerField Title="Categoria" 
+                                          ItemsSource="{Binding CategoriasDisponiveis}" 
+                                          SelectedItem="{Binding CategoriaSelecionada}" 
+                                          ItemDisplayBinding="{Binding Nome}" />
+
+                    <Grid ColumnDefinitions="*, *" ColumnSpacing="15">
+                        <material:TextField Grid.Column="0" Title="Duração (Minutos)" Text="{Binding ServicoAtual.DuracaoMinutos}" Keyboard="Numeric" />
+                        <material:TextField Grid.Column="1" Title="Preço (R$)" Text="{Binding ServicoAtual.Preco}" Keyboard="Numeric" />
+                    </Grid>
+
+                    <Grid ColumnDefinitions="*, Auto" VerticalOptions="Center" Margin="0,10,0,0">
+                        <Label Text="Serviço Ativo?" VerticalOptions="Center" />
+                        <Switch Grid.Column="1" IsToggled="{Binding ServicoAtual.IsAtivo}" />
+                    </Grid>
+
+                </VerticalStackLayout>
+            </Border>
+
+            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" HorizontalOptions="Center" />
+
+            <VerticalStackLayout Spacing="10">
+                <Button Text="Salvar Serviço" Command="{Binding SalvarCommand}" IsEnabled="{Binding IsNotBusy}" />
+                <Button Text="Cancelar" Command="{Binding CancelarCommand}" BackgroundColor="{StaticResource Alert}" IsEnabled="{Binding IsNotBusy}" />
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

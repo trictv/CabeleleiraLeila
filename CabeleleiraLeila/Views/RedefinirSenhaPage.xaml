@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:material="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialSymbols;assembly=UraniumUI.Icons.MaterialSymbols"
+             x:Class="CabeleleiraLeila.Views.RedefinirSenhaPage"
+             Title="{Binding Title}"
+             Shell.BackgroundColor="{StaticResource Primary}"
+             Shell.TitleColor="{StaticResource OnPrimary}"
+             Shell.ForegroundColor="{StaticResource OnPrimary}">
+
+    <Grid>
+        <!-- Fundo Superior -->
+        <Path Data="M 0,0 L 100,0 L 100,60 C 70,100 30,20 0,60 Z" Fill="{StaticResource Primary}" Aspect="Fill" HorizontalOptions="Fill" VerticalOptions="Start" HeightRequest="280" />
+
+        <ScrollView>
+            <VerticalStackLayout Padding="24,30,24,24" Spacing="24">
+
+                <VerticalStackLayout Spacing="5" Margin="0,0,0,10">
+                    <Label Text="Redefinir Senha" Style="{StaticResource Headline}" TextColor="{StaticResource OnPrimary}" />
+                    <Label Text="Cole o token enviado para o seu e-mail" Style="{StaticResource SubHeadline}" FontSize="16" TextColor="{StaticResource OnPrimary}" Opacity="0.8" />
+                </VerticalStackLayout>
+
+                <Border Padding="20" BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}" StrokeThickness="0">
+                    <Border.Shadow>
+                        <Shadow Brush="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource BackgroundDark}}" Opacity="0.15" Radius="15" Offset="0,5" />
+                    </Border.Shadow>
+                    <VerticalStackLayout Spacing="16">
+
+                        <material:TextField Title="Token de Segurança" Text="{Binding Token}">
+                            <material:TextField.Icon>
+                                <FontImageSource FontFamily="MaterialSharp" Glyph="{x:Static m:MaterialSharp.Vpn_key}" />
+                            </material:TextField.Icon>
+                        </material:TextField>
+
+                        <material:TextField Title="Nova Senha" Text="{Binding NovaSenha}" IsPassword="{Binding OcultarSenha}">
+                            <material:TextField.Icon>
+                                <FontImageSource FontFamily="MaterialSharp" Glyph="{x:Static m:MaterialSharp.Lock_reset}" />
+                            </material:TextField.Icon>
+                            <material:TextField.Attachments>
+                                <ImageButton Command="{Binding AlternarSenhaCommand}" BackgroundColor="Transparent" Padding="10" MaximumHeightRequest="45" MaximumWidthRequest="45">
+                                    <ImageButton.Triggers>
+                                        <DataTrigger TargetType="ImageButton" Binding="{Binding OcultarSenha}" Value="True">
+                                            <Setter Property="Source">
+                                                <Setter.Value>
+                                                    <FontImageSource FontFamily="MaterialSharp" Glyph="{x:Static m:MaterialSharp.Visibility}" Color="{StaticResource TextSecondaryLight}"/>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="ImageButton" Binding="{Binding OcultarSenha}" Value="False">
+                                            <Setter Property="Source">
+                                                <Setter.Value>
+                                                    <FontImageSource FontFamily="MaterialSharp" Glyph="{x:Static m:MaterialSharp.Visibility_off}" Color="{StaticResource TextSecondaryLight}"/>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger>
+                                    </ImageButton.Triggers>
+                                </ImageButton>
+                            </material:TextField.Attachments>
+                        </material:TextField>
+
+                        <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" WidthRequest="24" HeightRequest="24" HorizontalOptions="Center" />
+
+                        <Button Text="Salvar Nova Senha" Command="{Binding SalvarNovaSenhaCommand}" IsEnabled="{Binding IsNotBusy}" Margin="0,10,0,0"/>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Button Text="Voltar ao Login" Command="{Binding VoltarCommand}" BackgroundColor="Transparent" TextColor="{StaticResource TextSecondaryLight}" />
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>
